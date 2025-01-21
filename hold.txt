@@ -1,0 +1,21 @@
+Vector2 p = {r * cos(1), r * sin(1) };
+
+    for (int i = 0; i < (2 * PI * r) / 8.0; i++)
+    {
+        points.push_back(p + center);
+        points.push_back(p * -1.0 + center);
+        points.push_back({p.y + center.x, p.x + center.y});
+        points.push_back({-p.y + center.x, -p.x + center.y});
+        points.push_back({-p.x + center.x, p.y + center.y});
+        points.push_back({p.y + center.x, -p.x + center.y});
+        points.push_back({p.x + center.x, -p.y + center.y});
+        points.push_back({-p.y + center.x, p.x + center.y});
+        if (powf(p.x - 0.5, 2.0) + powf(p.y - 1, 2.0) >= pow(r, 2))
+        {
+            p = {p.x - 1, p.y - 1};
+        }
+        else
+        {
+            p = {p.x, p.y - 1};
+        }
+    }

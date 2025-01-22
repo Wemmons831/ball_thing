@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "incCirc.h"
 #include <iostream>
+#include "ball.h"
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -12,8 +13,12 @@ int main(void)
     const int screenHeight = 450;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    incCirc C1({400, 225}, 100, 1, 10);
-    incCirc C2({400, 225}, 100, 1, 10);
+    incCirc C1({400, 225}, 100, 1, 10,300);
+    incCirc C2({400, 225}, 200, 1, 10, 10);
+    std::vector<incCirc> rings;
+    rings.push_back(C1);
+    rings.push_back(C2);
+    Ball ball({screenWidth/2,screenHeight/2 - 30}, 10, rings);
     SetTargetFPS(60); // Set our game to run at 6 frames-per-second
     //---------------------------------k-------------------------------------------------
     float frame = 0;
@@ -21,7 +26,8 @@ int main(void)
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         // Update
-        C.setRotation(frame/60);
+        //C1.setRotation(frame/60);
+        //C2.setRotation(-frame/60);
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
@@ -31,7 +37,9 @@ int main(void)
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        C.Draw();
+        C1.Draw();
+        //C2.Draw();
+        ball.Draw();
         DrawFPS(0,0);
         
 

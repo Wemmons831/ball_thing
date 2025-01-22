@@ -8,6 +8,7 @@
 class incCirc{
 private:
     Vector2 center;
+    float mass;
     int rad;
     int thickness; // will be inside the radius
     float holeSize; // in radians
@@ -17,12 +18,17 @@ private:
     Image imageBuffer;
     Texture displayTexture;
 
+    std::vector<Vector2> gravityPoints;
+
 public:
-    incCirc(Vector2 _center, int _rad, float _holesize, int _thickness);
+    incCirc(Vector2 _center, int _rad, float _holesize, int _thickness, float _mass);
     void Draw();
-    void calcPoints(int r);
+    void calcPoints(int r, bool first);
     void Update();
     void setRotation(float _rotation);
+    std::vector<Vector2> getGravityPoints();
+    float getMass();
+    Vector2 getCenter();
 };
 
 #endif // INCCIRC_H

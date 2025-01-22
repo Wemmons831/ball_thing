@@ -19,3 +19,24 @@ Vector2 p = {r * cos(1), r * sin(1) };
             p = {p.x, p.y - 1};
         }
     }
+
+
+
+
+
+    for(incCirc ring : rings){
+        float pointMass = ring.getMass()/ring.getGravityPoints().size();
+        for(Vector2 point : ring.getGravityPoints()){
+            float r = sqrtf(powf((center.x - point.x) / 100,2) + (powf((center.y - point.y)/100,2)));
+            if(r == 0){ continue;}
+            f.x += ((G *  pointMass)/(powf(r,3))) * (center.x-point.x)/100;
+            f.y += ((G *  pointMass)/(powf(r,3))) * (center.y-point.y)/100;
+        }
+    }
+
+    for(Vector2 point : ring.getGravityPoints()){
+            float r = sqrtf(powf((center.x - point.x) / 100,2) + (powf((center.y - point.y)/100,2)));
+            if(r == 0){ continue;}
+            f.x += ((G *  pointMass)/(powf(r,3))) * (center.x-point.x)/100;
+            f.y += ((G *  pointMass)/(powf(r,3))) * (center.y-point.y)/100;
+        }

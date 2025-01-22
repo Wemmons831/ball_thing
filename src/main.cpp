@@ -13,7 +13,7 @@ int main(void)
     const int screenHeight = 450;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    incCirc C1({400, 225}, 100, 1, 10,300);
+    incCirc C1({400, 225}, 100, 1, 10,1000);
     incCirc C2({400, 225}, 200, 1, 10, 10);
     std::vector<incCirc> rings;
     rings.push_back(C1);
@@ -26,7 +26,7 @@ int main(void)
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         // Update
-        //C1.setRotation(frame/60);
+        C1.setRotation(frame/60);
         //C2.setRotation(-frame/60);
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here

@@ -21,7 +21,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 
 $(TARGET): $(OBJS)
-	$(CXX) -g -static $(OBJS)  $(LDFLAGS) $(LIB) -o $(TARGET)
+	$(CXX) -fsanitize=address -g -static $(OBJS) $(LDFLAGS) $(LIB) -o $(TARGET)
 
 
 clean:

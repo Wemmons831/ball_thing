@@ -22,6 +22,7 @@ incCirc::incCirc(Vector2 _center, int _rad, float _holesize, int _thickness, flo
 
 void incCirc::Update(){
     points.clear();
+    interiorPoints.clear();
     imageBuffer = GenImageColor(GetScreenWidth(), GetScreenHeight(), BLANK);
     for (int j = 0; j <= thickness; j++)
     {
@@ -36,12 +37,16 @@ void incCirc::Update(){
 
 void incCirc::Draw(){
     DrawTexture(displayTexture,0,0,WHITE);
-    
+    Vector2 gPoint = {rad * cosf(rotation + (holeSize/2) + PI), rad * sinf(rotation + (holeSize/2) + PI)};
+    gPoint += center;
+    DrawCircleV(gPoint,10,GREEN);
 }
 
 void incCirc::calcPoints(int r, bool first){
+    
+    
     float v = 0.005;
-    gravityPoints.push_back({0,0});
+    interiorPoints.push_back({0,0});
     points.push_back({0 + center.x,r + center.y});
     float start = (atan2f(r * sinf(rotation), r * cosf(rotation)));
     float end = (atan2f(r * sinf(holeSize + rotation),r * cosf(holeSize + rotation)));
@@ -76,24 +81,33 @@ void incCirc::calcPoints(int r, bool first){
             points.push_back(temp);
         }
         if(first){
-            if (gravityPoints.back() != temp){
-                gravityPoints.push_back(temp);
+            if (interiorPoints.back() != temp){
+                interiorPoints.push_back(temp);
             }
         }
         
     }
-    gravityPoints.erase(gravityPoints.begin());
+    interiorPoints.erase(interiorPoints.begin());
 }
 void incCirc::setRotation(float _rotation){
     rotation = _rotation;
     Update();
 }
-std::vector<Vector2> incCirc::getGravityPoints(){
-    return gravityPoints;
+std::vector<Vector2> incCirc::getSurfacePoints(){
+    return interiorPoints;
 }
 float incCirc::getMass(){
     return mass;
 }
 Vector2 incCirc::getCenter(){
     return center;
+}
+float incCirc::getRad(){
+    return rad;
+}
+float incCirc::getRot(){
+    return rotation;
+}
+float incCirc::getHoleSize(){
+    return holeSize;
 }

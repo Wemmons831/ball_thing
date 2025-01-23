@@ -18,7 +18,7 @@ private:
     Image imageBuffer;
     Texture displayTexture;
 
-    std::vector<Vector2> gravityPoints;
+    std::vector<Vector2> interiorPoints;
 
 public:
     incCirc(Vector2 _center, int _rad, float _holesize, int _thickness, float _mass);
@@ -26,9 +26,12 @@ public:
     void calcPoints(int r, bool first);
     void Update();
     void setRotation(float _rotation);
-    std::vector<Vector2> getGravityPoints();
+    std::vector<Vector2> getSurfacePoints();
     float getMass();
     Vector2 getCenter();
+    float getRad();
+    float getRot();
+    float getHoleSize();
 };
 
 #endif // INCCIRC_H

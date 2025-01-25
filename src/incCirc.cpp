@@ -17,6 +17,7 @@ incCirc::incCirc(Vector2 _center, int _rad, float _holesize, int _thickness, flo
         ImageDrawPixelV(&imageBuffer,i,BLACK);
     }
     displayTexture = LoadTextureFromImage(imageBuffer);
+    
 
 }
 
@@ -40,11 +41,12 @@ void incCirc::Draw(){
     Vector2 gPoint = {rad * cosf(rotation + (holeSize/2) + PI), rad * sinf(rotation + (holeSize/2) + PI)};
     gPoint += center;
     DrawCircleV(gPoint,10,GREEN);
+    
 }
 
 void incCirc::calcPoints(int r, bool first){
-    
-    
+
+    Vector2 temp;
     float v = 0.005;
     interiorPoints.push_back({0,0});
     points.push_back({0 + center.x,r + center.y});
@@ -76,7 +78,7 @@ void incCirc::calcPoints(int r, bool first){
         }
         
             
-        Vector2 temp = {floorf(r * cos(i) + center.x), floorf(r * sin(i) + center.y)};
+        temp = {floorf(r * cos(i) + center.x), floorf(r * sin(i) + center.y)};
         if(points.back() != temp){
             points.push_back(temp);
         }

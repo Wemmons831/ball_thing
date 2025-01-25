@@ -2,19 +2,24 @@
 #include "incCirc.h"
 #include <iostream>
 #include "ball.h"
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 int main(void)
 {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
     // Initialization
     //-------------------------------------------------------------------------------------
     const int screenWidth = 800;
     const int screenHeight = 450;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    incCirc C1({400, 225}, 100, 1, 10,1000);
-    incCirc C2({400, 225}, 200, 1, 10, 100000);
+    incCirc C1({400, 225}, 100, 1, 10,5000);
+    incCirc C2({400, 225}, 175, 1, 10, 10000);
 
     Ball ball({screenWidth/2,screenHeight/2 - 30}, 10);
     ball.addRing(C1);
@@ -27,7 +32,7 @@ int main(void)
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         // Update
-        C1.setRotation(frame/20);
+        C1.setRotation(frame/30);
         C2.setRotation(-frame/20);
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here

@@ -21,7 +21,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 
 $(TARGET): $(OBJS)
-	$(CXX) -fsanitize=address -g -static $(OBJS) $(LDFLAGS) $(LIB) -o $(TARGET)
+	$(CXX) -g -Wmissing-field-initializers -static $(OBJS) $(LDFLAGS) $(LIB) -o $(TARGET)
 
 
 clean:

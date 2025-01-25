@@ -1,4 +1,5 @@
-#include "ball.h"
+#include "ball.h";
+
 Ball::Ball(Vector2 _center, int _rad){
     center = _center;
     rad = _rad;
@@ -22,8 +23,10 @@ Vector2 Ball::Gravity(){
         Vector2 calc = {center.x - gPoint.x, center.y - gPoint.y};
         calc = Vector2Normalize(calc * -1);
         
-        f += Vector2ClampValue(calc * force, -3,3);       
+        f += Vector2ClampValue(calc * force, -3,3);
+          
     }
+    
     
     return f;
 }
@@ -36,11 +39,13 @@ void Ball::Update(){
     for(auto& ringRef : rings){
         incCirc &ring = ringRef.get();
         std::vector<Vector2> points = ring.getSurfacePoints();
-        std::cout << points.size() << std::endl;
+       
         for(Vector2 point : points ){
             if(CheckCollisionPointCircle(point,center,rad)){
-                center = {400,225};
-                ///std::cout << "here" << std::endl;
+                Vector2 norm = {point.x - ring.getCenter().x, point.y - ring.getCenter().y};
+                norm = Vector2Normalize(norm);
+                norm = norm * -1;
+                velocity = Vector2Reflect(velocity,norm);
                 break;
             }
         }
@@ -48,6 +53,11 @@ void Ball::Update(){
     }
     
     center += velocity;
+    if(center.x < 0 || center.x > 800 || center.y < 0 || center.y > 450){
+        std::cout << "out of bounds" << std::endl;
+        center = {400,225};
+        velocity = {0,0};
+    }
 }
 void Ball::addRing(incCirc& ring){
     rings.push_back(ring);

@@ -32,6 +32,13 @@ public:
     float getRad();
     float getRot();
     float getHoleSize();
+    ~incCirc(){
+        std::cout << "deleted" << std::endl;
+        UnloadTexture(displayTexture);
+        UnloadImage(imageBuffer);
+    }
+    
 };
+
 
 #endif // INCCIRC_H

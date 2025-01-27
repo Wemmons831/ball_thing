@@ -1,15 +1,15 @@
 #include "ball.h";
 
-Ball::Ball(Vector2 _center, int _rad){
+Ball::Ball(Vector2 _center, int *_rad){
     center = _center;
     rad = _rad;
     velocity = {0,0};
     mass = 1;
 }
 void Ball::Draw(){
-    Update();
     
-    DrawCircleV(center,rad,BLUE);
+    
+    DrawCircleV(center,*rad,RED);
 }
 Vector2 Ball::Gravity(){
     Vector2 f = {0,0};
@@ -17,7 +17,7 @@ Vector2 Ball::Gravity(){
     for(auto& ringRef : rings){
         
         incCirc &ring = ringRef.get();
-        Vector2 gPoint = {rad * cosf(ring.getRot() + (ring.getHoleSize() / 2) + PI), rad * sinf(ring.getRot() + (ring.getHoleSize() / 2) + PI)};
+        Vector2 gPoint = {*rad * cosf(ring.getRot() + (ring.getHoleSize() / 2) + PI), *rad * sinf(ring.getRot() + (ring.getHoleSize() / 2) + PI)};
         gPoint += ring.getCenter();
         float force = (G * ring.getMass())/Vector2DistanceSqr(center,gPoint);
         Vector2 calc = {center.x - gPoint.x, center.y - gPoint.y};
@@ -27,13 +27,12 @@ Vector2 Ball::Gravity(){
           
     }
     
-    
     return f;
 }
 void Ball::Update(){
-    //std::cout << Gravity().x << " " << Gravity().y << std::endl;
+    
     velocity += Gravity();
-    //std::cout << velocity.x << " " << velocity.y << std::endl;
+   
     
     
     for(auto& ringRef : rings){
@@ -41,7 +40,7 @@ void Ball::Update(){
         std::vector<Vector2> points = ring.getSurfacePoints();
        
         for(Vector2 point : points ){
-            if(CheckCollisionPointCircle(point,center,rad)){
+            if(CheckCollisionPointCircle(point,center,*rad)){
                 Vector2 norm = {point.x - ring.getCenter().x, point.y - ring.getCenter().y};
                 norm = Vector2Normalize(norm);
                 norm = norm * -1;
@@ -54,11 +53,17 @@ void Ball::Update(){
     
     center += velocity;
     if(center.x < 0 || center.x > 800 || center.y < 0 || center.y > 450){
-        std::cout << "out of bounds" << std::endl;
+        
         center = {400,225};
         velocity = {0,0};
     }
 }
 void Ball::addRing(incCirc& ring){
     rings.push_back(ring);
+}
+
+void Ball::Reset(){
+    center = {0,0};
+    velocity = {GetScreenWidth()/2.0f,GetScreenHeight()/2.0f};
+    *rad = 10;
 }

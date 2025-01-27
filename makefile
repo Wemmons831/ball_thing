@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -Wall -Wextra -std=c++17 -I./src -I./include -g
+CXXFLAGS := -Wall -Wextra -std=c++17 -I./src -I./include -I./rlImGui/extras 
 SRC_DIR := src
 BUILD_DIR := build
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
@@ -8,7 +8,7 @@ LIB_DIR := lib
 INC_DIR := include
 LDFLAGS := -L$(LIB_DIR)
 TARGET := release/main.exe
-LIB := -lraylib -lopengl32 -lgdi32 -lwinmm
+LIB := -lraylib -lopengl32 -lgdi32 -lwinmm -limgui -lrlImGui
 
 
 
@@ -21,7 +21,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 
 $(TARGET): $(OBJS)
-	$(CXX) -g -Wmissing-field-initializers -static $(OBJS) $(LDFLAGS) $(LIB) -o $(TARGET)
+	$(CXX) -Wmissing-field-initializers -static $(OBJS) $(LDFLAGS) $(LIB) -o $(TARGET)
 
 
 clean:

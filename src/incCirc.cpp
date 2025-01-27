@@ -24,23 +24,20 @@ incCirc::incCirc(Vector2 _center, int _rad, float _holesize, int _thickness, flo
 void incCirc::Update(){
     points.clear();
     interiorPoints.clear();
-    imageBuffer = GenImageColor(GetScreenWidth(), GetScreenHeight(), BLANK);
+    ImageClearBackground(&imageBuffer, BLANK);
     for (int j = 0; j <= thickness; j++)
     {
         calcPoints(rad - j, j==0);
     }
     for (Vector2 i : points)
     {
-        ImageDrawPixelV(&imageBuffer, i, BLACK);
+        ImageDrawPixelV(&imageBuffer, i, WHITE);
     }
     UpdateTexture(displayTexture, imageBuffer.data);
 }
 
 void incCirc::Draw(){
     DrawTexture(displayTexture,0,0,WHITE);
-    Vector2 gPoint = {rad * cosf(rotation + (holeSize/2) + PI), rad * sinf(rotation + (holeSize/2) + PI)};
-    gPoint += center;
-    DrawCircleV(gPoint,10,GREEN);
     
 }
 
@@ -63,6 +60,7 @@ void incCirc::calcPoints(int r, bool first){
     {
         start += 2 * PI;
     }
+    
     //std::cout << start << " " << end << std::endl;
     for(float i = 0; i < 2 *PI; i+= v){
         
